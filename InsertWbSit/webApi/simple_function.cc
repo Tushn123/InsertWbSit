@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "simple_function.h"
 
-#include "json.h"
-#include "tinyxml2.h"
-#include "curl.h"
+#include "../json/json.h"
+#include "../xml/tinyxml2.h"
+#include "../Curl/curl.h"
 
 namespace xml {
 void ConvertElement(tinyxml2::XMLElement* node, Json::Value& json_data,

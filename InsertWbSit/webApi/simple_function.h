@@ -5,8 +5,8 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <string>
-#include "curl.h"
-#include "json.h"
+#include "../Curl/curl.h"
+#include "../json/json.h"
 
 #pragma comment(lib, "libcurl.lib")
 

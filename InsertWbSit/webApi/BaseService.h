@@ -2,7 +2,7 @@
 #include <list>
 #include <vector>
 #include "../json/json.h"
-#include "tinyxml2.h"
+#include "../xml/tinyxml2.h"
 #include <afxinet.h>
 //#include <string>
 //using namespace std;

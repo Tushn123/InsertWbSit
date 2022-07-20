@@ -3,7 +3,7 @@
 
 #include "HttpService.h"
 #include "simple_function.h"
-#include "tinyxml2.h"
+#include "../xml/tinyxml2.h"
 
 
 static void SchoolBaseInfoJ2S(const Json::Value& json_info,

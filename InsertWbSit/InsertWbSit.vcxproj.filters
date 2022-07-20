@@ -16,6 +16,15 @@
     <Filter Include="webApi">
       <UniqueIdentifier>{a368cf5e-4016-48e6-9c03-f2fe56a90b8f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="json">
+      <UniqueIdentifier>{f8924c87-3d6e-42dc-96e7-31016661f4f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="xml">
+      <UniqueIdentifier>{03cfbaaa-9473-455c-a0f5-95b24504ce9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Curl">
+      <UniqueIdentifier>{a431212f-863e-4d9b-ae4c-cda8cc0fbc75}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -48,20 +57,50 @@
     <ClInclude Include="webApi\UrlCode.h">
       <Filter>webApi</Filter>
     </ClInclude>
-    <ClInclude Include="webApi\tinyxml2.h">
-      <Filter>webApi</Filter>
-    </ClInclude>
     <ClInclude Include="webApi\PingCpp.h">
-      <Filter>webApi</Filter>
-    </ClInclude>
-    <ClInclude Include="webApi\json.h">
-      <Filter>webApi</Filter>
-    </ClInclude>
-    <ClInclude Include="webApi\json-forwards.h">
       <Filter>webApi</Filter>
     </ClInclude>
     <ClInclude Include="webApi\simple_function.h">
       <Filter>webApi</Filter>
+    </ClInclude>
+    <ClInclude Include="json\json.h">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="json\json-forwards.h">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="xml\tinyxml2.h">
+      <Filter>xml</Filter>
+    </ClInclude>
+    <ClInclude Include="Curl\curl.h">
+      <Filter>Curl</Filter>
+    </ClInclude>
+    <ClInclude Include="Curl\curlbuild.h">
+      <Filter>Curl</Filter>
+    </ClInclude>
+    <ClInclude Include="Curl\curlrules.h">
+      <Filter>Curl</Filter>
+    </ClInclude>
+    <ClInclude Include="Curl\curlver.h">
+      <Filter>Curl</Filter>
+    </ClInclude>
+    <ClInclude Include="Curl\easy.h">
+      <Filter>Curl</Filter>
+    </ClInclude>
+    <ClInclude Include="Curl\mprintf.h">
+      <Filter>Curl</Filter>
+    </ClInclude>
+    <ClInclude Include="Curl\multi.h">
+      <Filter>Curl</Filter>
+    </ClInclude>
+    <ClInclude Include="Curl\stdcheaders.h">
+      <Filter>Curl</Filter>
+    </ClInclude>
+    <ClInclude Include="Curl\system.h">
+      <Filter>Curl</Filter>
+    </ClInclude>
+    <ClInclude Include="Curl\typecheck-gcc.h">
+      <Filter>Curl</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -86,17 +125,17 @@
     <ClCompile Include="webApi\UrlCode.cpp">
       <Filter>webApi</Filter>
     </ClCompile>
-    <ClCompile Include="webApi\tinyxml2.cpp">
-      <Filter>webApi</Filter>
-    </ClCompile>
     <ClCompile Include="webApi\PingCpp.cpp">
-      <Filter>webApi</Filter>
-    </ClCompile>
-    <ClCompile Include="webApi\jsoncpp.cpp">
       <Filter>webApi</Filter>
     </ClCompile>
     <ClCompile Include="webApi\simple_function.cc">
       <Filter>webApi</Filter>
+    </ClCompile>
+    <ClCompile Include="json\jsoncpp.cpp">
+      <Filter>json</Filter>
+    </ClCompile>
+    <ClCompile Include="xml\tinyxml2.cpp">
+      <Filter>xml</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

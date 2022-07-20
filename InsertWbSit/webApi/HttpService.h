@@ -9,8 +9,8 @@ using namespace std;
 
 #include "UrlCode.h"
 #include "PingCpp.h"
-#include "tinyxml2.h"
-#include "json.h"
+#include "../xml/tinyxml2.h"
+#include "../json/json.h"
 
 #include <winsock2.h>
 #include <iphlpapi.h>
