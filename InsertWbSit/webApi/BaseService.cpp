@@ -989,7 +989,6 @@ int CBaseService::GetServiceInfo(IN char* cIP, IN char* port, IN char* code, OUT
 	strUrl += code;
 	strUrl += "&subjectID=";
 
-
 	TCHAR cUrl[1024 * 5] = L"";
 	g_charToTCHAR(strUrl.c_str(), cUrl);
 	int iret = cHttpService.HttpGet(cUrl, cReqData);
@@ -1330,6 +1329,7 @@ int CBaseService::GetNetClassroomInfoByClassID(IN std::list<NetWorkRoomInfo>& cl
 bool CBaseService::InsertStatusCtx(char* ip, char* port, struct AbnormalInfo temp)
 {
 	//qDebug()<<"InsertStatusCtx";
+	WriteLog("InsertStatusCtx 向数据库中插入信息");
 	CHttpService cHttpService;
 	//int cnt = 0;
 
@@ -1372,37 +1372,18 @@ bool CBaseService::InsertStatusCtx(char* ip, char* port, struct AbnormalInfo tem
 	strUrl += "/api/tempstorage/insert/wbSit";
 	//http://172.16.52.150:10102/Base/WS/Service_Basic.asmx/WS_G_GetSubSystemServerInfo?sysID=D00&subjectID=
 
-	// char c_strUrl[128];
-	// TCHAR t_strUrl[128];
-	// g_StringToChar(strUrl, c_strUrl);
-	// g_charToTCHAR(c_strUrl, t_strUrl);
-	//
-	// char c_sReqData[128];
-	// TCHAR t_sReqData[128];
-	// g_StringToChar(m_sReqData, c_sReqData);
-	// g_charToTCHAR(c_sReqData, t_sReqData);
-	//
-	// char c_postData[128];
-	// TCHAR t_postData[128];
-	// g_StringToChar(postData, c_postData);
-	// g_charToTCHAR(c_postData, t_postData);
-
-	//int iret=cHttpService.HttpPost((LPCTSTR)strUrl.c_str(), (LPCTSTR)postData.c_str(), c_sReqData);
-	//int iret=cHttpService.HttpPost(t_strUrl, t_postData, c_sReqData);
 	bool iret = net::http::Post(strUrl, postData, m_sReqData);
 
-	//m_sReqData = c_sReqData;
 	std::string sReqData = m_sReqData;
-	std::string sReqData1;
 	if (iret < 0)
 	{
-		WriteLog("InsertStatusCtx 插入数据库返回异常!\r\n");
+		WriteLog("InsertStatusCtx 插入数据库返回异常!");
 	}
 	Json::Value value;
 	Json::Reader read;
 	if (!read.parse(m_sReqData, value))
 	{
-		WriteLog("插入数据库返回异常\r\n");
+		WriteLog("插入数据库返回异常");
 		return false;
 	}
 	int code = value["errCode"].asInt();
@@ -1410,11 +1391,11 @@ bool CBaseService::InsertStatusCtx(char* ip, char* port, struct AbnormalInfo tem
 	bool mData = value["data"].asBool();
 	//qDebug()<<code<<message<<mData;
 	if (code == 0 && message == "success"&&mData) {
-		WriteLog(">>>>>>>>>>>>>>>>>>插入数据库成功\r\n");
+		WriteLog(">>>>>>>>>>>>>>>>>>插入数据库成功");
 		return true;
 	}
 	else {
-		WriteLog(">>>>>>>>>>>>>>>>>>插入数据库失败\r\n");
+		WriteLog(">>>>>>>>>>>>>>>>>>插入数据库失败");
 		return false;
 	}
 	//    bool resIsTure1=response.contains("Success");

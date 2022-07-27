@@ -57,12 +57,8 @@ CInsertWbSitApp::CInsertWbSitApp()
 
 bool CInsertWbSitApp::replaceNginxListen()
 {
+	WriteLog("正在修改nginx配置文件");
 	//替换nginx服务器端口配置
-	DWORD len = 128 * sizeof(TCHAR);
-	if (m_key.QueryStringValue(L"strLivePort", strLivePort, &len) != ERROR_SUCCESS)
-	{
-		WriteLog("strLivePort读取错误\r\n");
-	}
 	std::string str_strLivePort = TCHARTurnString(strLivePort);
 	//CString strLivePort(str_strLivePort.data()) ;
 	//CString strLivePort = GetstrValueFromRegedit(RIGISTER_KEY, L"strLivePort");
@@ -78,7 +74,7 @@ bool CInsertWbSitApp::replaceNginxListen()
 	strFilePath.Format(TEXT("%s"), cTemp);
 	int iLen = strFilePath.ReverseFind('\\');
 	strFilePath = strFilePath.Left(iLen);
-	strFilePath = strFilePath + TEXT("\\nginx-rtmp\\conf\\nginx.conf");
+	strFilePath = strFilePath + TEXT("\\nginx\\conf\\nginx.conf");
 
 	infile.open(strFilePath, ios::in);
 	std::string strliveport;
@@ -89,18 +85,17 @@ bool CInsertWbSitApp::replaceNginxListen()
 	std::regex regPattern("[0-9]+");
 	while (getline(infile, str))
 	{
-
 		if (strstr(str.c_str(), "listen"))
 		{
 			str = std::regex_replace(str, regPattern, strliveport);
 			if(str.find(strliveport))
 			{
-				WriteLog("nginx配置文件端口修改成功\r\n");
+				WriteLog("nginx配置文件端口修改成功");
 			}
 			else
 			{
 				//AfxMessageBox(L"no");
-				WriteLog("nginx配置文件端口修改失败\r\n");
+				WriteLog("nginx配置文件端口修改失败");
 			}
 			//str = str.replace(str.find(regPattern.ToString()), 20, strliveport);
 		}
@@ -163,60 +158,59 @@ BOOL CInsertWbSitApp::InitInstance()
 	//BOOL bOpenReg = key.Open(HKEY_LOCAL_MACHINE, _T("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\CloudClassroom\\WebService"));
 	if ((ret = m_key.Open(HKEY_LOCAL_MACHINE, _T("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\CloudClassroom\\WebService"), KEY_READ)) != ERROR_SUCCESS)
 	{
-		//AfxMessageBox(_T("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\CloudClassroom\\WebService注册表打开失败"));
-		WriteLog("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\CloudClassroom\\WebService注册表打开失败\r\n");
+		WriteLog("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\CloudClassroom\\WebService注册表打开失败");
 	}
 	else
 	{
-		DWORD len1 = 128 * sizeof(TCHAR);
-		if(m_key.QueryStringValue(L"strLiveIp", strLiveIp, &len1) != ERROR_SUCCESS)
-		{
-			WriteLog("strLiveIp读取错误\r\n");
-		}
-
-		// DWORD len2 = 128 * sizeof(TCHAR);
-		// if (m_key.QueryStringValue(L"strLivePort", strLivePort, &len2) != ERROR_SUCCESS)
+		WriteLog("注册表打开成功");
+		// DWORD len1 = 128 * sizeof(TCHAR);
+		// if(m_key.QueryStringValue(L"strLiveIp", strLiveIp, &len1) != ERROR_SUCCESS)
 		// {
-		// 	WriteLog("strLivePort读取错误\r\n");
+		// 	WriteLog("strLiveIp读取错误");
 		// }
+
+		DWORD len2 = 128 * sizeof(TCHAR);
+		if (m_key.QueryStringValue(L"strLivePort", strLivePort, &len2) != ERROR_SUCCESS)
+		{
+			WriteLog("strLivePort读取错误");
+		}
 		DWORD len3 = 128 * sizeof(TCHAR);
 		if (m_key.QueryStringValue(L"WebServiceIP", WebServiceIP, &len3) != ERROR_SUCCESS)
 		{
-			WriteLog("WebServiceIP读取错误\r\n");
+			WriteLog("WebServiceIP读取错误");
 		}
 		
 		DWORD len4 = 128 * sizeof(TCHAR);
 		if (m_key.QueryStringValue(L"WebServicePort", WebServicePort, &len4) != ERROR_SUCCESS)
 		{
-			WriteLog("WebServicePort读取错误\r\n");
+			WriteLog("WebServicePort读取错误");
 		}
-		DWORD len5 = 128 * sizeof(TCHAR);
-		if(m_key.QueryStringValue(L"RecordMac", RecordMac, &len5) != ERROR_SUCCESS)
-		{
-			WriteLog("RecordMac读取错误\r\n");
-		}
-		DWORD len6 = 128 * sizeof(TCHAR);
-		if (m_key.QueryStringValue(L"DiskPath", DiskPath, &len6) != ERROR_SUCCESS)
-		{
-			WriteLog("DiskPath读取错误\r\n");
-		}
-		DWORD len7 = 128 * sizeof(TCHAR);
-		if (m_key.QueryStringValue(L"strHttpPort", strHttpPort, &len7) != ERROR_SUCCESS)
-		{
-			WriteLog("strHttpPort读取错误\r\n");
-		}
+		// DWORD len5 = 128 * sizeof(TCHAR);
+		// if(m_key.QueryStringValue(L"RecordMac", RecordMac, &len5) != ERROR_SUCCESS)
+		// {
+		// 	WriteLog("RecordMac读取错误");
+		// }
+		// DWORD len6 = 128 * sizeof(TCHAR);
+		// if (m_key.QueryStringValue(L"DiskPath", DiskPath, &len6) != ERROR_SUCCESS)
+		// {
+		// 	WriteLog("DiskPath读取错误");
+		// }
+		// DWORD len7 = 128 * sizeof(TCHAR);
+		// if (m_key.QueryStringValue(L"strHttpPort", strHttpPort, &len7) != ERROR_SUCCESS)
+		// {
+		// 	WriteLog("strHttpPort读取错误");
+		// }
 		replaceNginxListen();
 	}
 	m_key.Close();
 
-	std::string str_strLiveIp = TCHARTurnString(strLiveIp);
-	//std::string str_strLivePort = TCHARTurnString(strLivePort);
-	std::string str_DiskPath = TCHARTurnString(DiskPath);
-	std::string str_RecordMac = TCHARTurnString(RecordMac);
-	std::string str_strHttpPort = TCHARTurnString(strHttpPort);
-	replace(str_RecordMac.begin(), str_RecordMac.end(), '-', ' ');
-	str_RecordMac.erase(std::remove_if(str_RecordMac.begin(), str_RecordMac.end(), [](unsigned char x) {return std::isspace(x); }), str_RecordMac.end());
-
+	//std::string str_strLiveIp = TCHARTurnString(strLiveIp);
+	std::string str_strLivePort = TCHARTurnString(strLivePort);
+	// std::string str_DiskPath = TCHARTurnString(DiskPath);
+	// std::string str_RecordMac = TCHARTurnString(RecordMac);
+	// std::string str_strHttpPort = TCHARTurnString(strHttpPort);
+	//replace(str_RecordMac.begin(), str_RecordMac.end(), '-', ' ');
+	//str_RecordMac.erase(std::remove_if(str_RecordMac.begin(), str_RecordMac.end(), [](unsigned char x) {return std::isspace(x); }), str_RecordMac.end());
 
 	//先获取服务器信息
 	CBaseService cBaseService;
@@ -226,34 +220,43 @@ BOOL CInsertWbSitApp::InitInstance()
 	g_TcharToChar(WebServicePort, CWebServicePort);
 
 	std::string str_websitName;
+	std::string LocalMac;
 	CString localIp= GetLocalIP();
+	//WriteLog(CW2A(localIp.GetString()));
+	WriteLog("获取本机ip");
+
+	CHttpService cHttpService;
+	cHttpService.GetMacByGetAdaptersInfo(LocalMac);
+	replace(LocalMac.begin(), LocalMac.end(), '-', ' ');
+	LocalMac.erase(std::remove_if(LocalMac.begin(), LocalMac.end(), [](unsigned char x) {return std::isspace(x); }), LocalMac.end());
+	WriteLog("获取本机mac");
+
 	CString name=localIp.Mid(localIp.ReverseFind(_T('.'))+1);
 	name += "Http录播服务器";
 	// //调用接口，发送直播数据到服务器
 	struct AbnormalInfo temp;
 	temp.lanIp = CW2A(localIp.GetString());
 	//temp.lanPort = 0;
-	temp.lanPort = std::stoi(str_strHttpPort);
-	temp.macAddr = str_RecordMac;
-	temp.passWord = "NULL";
-	temp.phyPath = "NULL";
-	temp.userName = "NULL";
-	temp.virtualDirName = "NULL";
-	temp.wanIp = "NULL";//str_strLiveIp;
+	temp.lanPort = std::stoi(strLivePort);
+	temp.macAddr = LocalMac;
+	temp.passWord = "";
+	temp.phyPath = "";
+	temp.userName = "";
+	temp.virtualDirName = "";
+	temp.wanIp = "";//str_strLiveIp;
 	temp.wanPort = NULL;// std::stoi(str_strLivePort);
 	temp.websitName = CW2A(name.GetString());
 	temp.websitType = 1;
 	bool ret_insert=cBaseService.InsertStatusCtx(CWebServiceIP, CWebServicePort, temp);
 	if(ret_insert)
 	{
-		WriteLog("插入数据库成功！\r\n");
+		WriteLog("插入数据库成功！");
 	}
 	else
 	{
-		WriteLog("插入数据库失败！\r\n");
+		WriteLog("插入数据库失败！");
 	}
 
-	//AfxMessageBox(L"--------------");
 
 	CInsertWbSitDlg dlg;
 	m_pMainWnd = &dlg;
@@ -281,7 +284,6 @@ BOOL CInsertWbSitApp::InitInstance()
 		delete pShellManager;
 	}
 
-	//AfxMessageBox(L"11111111");
 
 	// 由于对话框已关闭，所以将返回 FALSE 以便退出应用程序，
 	//  而不是启动应用程序的消息泵。

@@ -36,7 +36,6 @@ private:
 	TCHAR WebServicePort[128] = L"";
 	TCHAR RecordMac[128] = L"";
 	TCHAR strHttpPort[128] = L"";
-	//TCHAR strLivePort[128] = L"";
 	TCHAR DiskPath[128] = L"";
 
 	CRegKey m_key;

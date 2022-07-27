@@ -497,7 +497,7 @@ int CHttpService::HttpGetJson(LPCTSTR strUrl, std::string& sResponse)
         iLen = 1023;
     }
     memcpy(cLog, sResponse.c_str(), iLen);
-   // WriteLog("返回Json解析后为：%s", cLog);
+    //WriteLog("返回Json解析后为：%s", cLog);
     return iRet;
 }
 
@@ -690,6 +690,9 @@ bool CHttpService::GetMacByGetAdaptersInfo(std::string& macOUT)
 				continue;
 			// 确保MAC地址的长度为 00-00-00-00-00-00
 			if (pAdapter->AddressLength != 6)
+				continue;
+			//确保是物理网卡
+			if(strstr(pAdapter->Description, "PCI") <= 0)
 				continue;
 			char acMAC[32];
 			sprintf(acMAC, "%02X-%02X-%02X-%02X-%02X-%02X",

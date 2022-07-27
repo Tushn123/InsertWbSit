@@ -150,4 +150,3 @@ HCURSOR CInsertWbSitDlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
 }
-
